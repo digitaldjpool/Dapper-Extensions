@@ -1,0 +1,37 @@
+DigitalDJPool.DapperExtensions
+Copyright 2011 Thad Smith, Page Brooks and contributors
+
+This product is a fork of Dapper Extensions
+(https://github.com/tmsmith/Dapper-Extensions), licensed under the
+Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
+
+Base: upstream commit dd82ecc6 (2017-08-09, "ignoreKeyProperties additions"),
+the commit that added nuget/DapperExtensions.1.6.3.nupkg. Upstream never tagged
+1.6.3; this fork tags that commit as `upstream-1.6.3`.
+
+Digital DJ Pool's changes, all build and packaging only. No upstream source
+file (*.cs) was modified:
+
+  1. Added DigitalDJPool.DapperExtensions/DigitalDJPool.DapperExtensions.csproj,
+     an SDK-style project that compiles the unmodified sources in
+     DapperExtensions/ plus DapperExtensions.Net45/DapperAsync*.cs (the async
+     API that shipped in the upstream lib/net45 DLL) for net481,
+     netstandard2.0 and net10.0. It keeps the assembly name DapperExtensions,
+     namespace DapperExtensions and AssemblyVersion 1.6.3.0 (from the upstream
+     Properties/AssemblyInfo.cs).
+  2. Packaged as NuGet id DigitalDJPool.DapperExtensions 1.6.3, with license
+     expression Apache-2.0 and the upstream authors credited.
+  3. Changed the Dapper dependency from >= 1.12 (net40/net45) to >= 2.0.30.
+     Dapper 2.0.30 is the lowest release with both a net461 and a
+     netstandard2.0 build and no known advisory in its dependency graph:
+       - 1.50.4 and 1.50.5 have netstandard2.0, but depend on
+         System.Data.SqlClient 4.4.0 (GHSA-8g2p-5pqh-5jmc, GHSA-98g6-xh36-x2p7).
+       - 2.0.4 has netstandard2.0 only, with no .NET Framework build.
+  4. Added framework dependencies: Microsoft.CSharp and System.Data (net481),
+     Microsoft.CSharp 4.7.0 (netstandard2.0).
+  5. Added global.json (pins .NET SDK 10.0.4xx), NuGet.config (nuget.org only),
+     this NOTICE file and a fork section at the top of readme.md.
+
+The upstream net40 target and the legacy projects (DapperExtensions.csproj,
+DapperExtensions.Net45.csproj, DapperExtensionsDNXCore, DapperExtensions.sln)
+are left as they were and are not used by this build.

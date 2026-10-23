@@ -1,3 +1,20 @@
+# DigitalDJPool.DapperExtensions (fork)
+
+This branch (`djp/1.6.3`) is Digital DJ Pool's multi-targeted build of **Dapper Extensions 1.6.3**. It forks [tmsmith/Dapper-Extensions](https://github.com/tmsmith/Dapper-Extensions) at commit `dd82ecc6`, the 1.6.3 source.
+
+* Targets `net481`, `netstandard2.0` and `net10.0`. Depends on Dapper >= 2.0.30.
+* Packed as `DigitalDJPool.DapperExtensions` 1.6.3. Assembly name, namespace (`DapperExtensions`) and `AssemblyVersion` (1.6.3.0) match the original package.
+* Only build and packaging changed. No upstream source file was modified. [NOTICE](NOTICE) lists every change.
+
+Build and pack:
+
+```
+dotnet build -c Release DigitalDJPool.DapperExtensions/DigitalDJPool.DapperExtensions.csproj
+dotnet pack -c Release DigitalDJPool.DapperExtensions/DigitalDJPool.DapperExtensions.csproj -o artifacts
+```
+
+Licensed under the Apache License, Version 2.0, as upstream.
+
 # Introduction
 
 Dapper Extensions is a small library that complements [Dapper](https://github.com/SamSaffron/dapper-dot-net) by adding basic CRUD operations (Get, Insert, Update, Delete) for your POCOs. For more advanced querying scenarios, Dapper Extensions provides a predicate system. The goal of this library is to keep your POCOs pure by not requiring any attributes or base class inheritance.

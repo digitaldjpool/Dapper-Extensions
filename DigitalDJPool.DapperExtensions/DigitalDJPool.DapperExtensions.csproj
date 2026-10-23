@@ -1,0 +1,71 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Multi-targeted build of the unmodified DapperExtensions 1.6.3 sources (upstream commit dd82ecc6).
+    Nothing under ../DapperExtensions or ../DapperExtensions.Net45 is edited; this project only compiles them.
+    See ../NOTICE for the full list of changes from upstream.
+  -->
+
+  <PropertyGroup>
+    <TargetFrameworks>net481;netstandard2.0;net10.0</TargetFrameworks>
+    <AssemblyName>DapperExtensions</AssemblyName>
+    <RootNamespace>DapperExtensions</RootNamespace>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+
+    <!-- Upstream sources carry their own AssemblyInfo.cs (AssemblyVersion 1.6.3.0, InternalsVisibleTo, CLSCompliant). -->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+
+    <!-- Upstream code predates these analyzers; we do not change source to satisfy them. -->
+    <NoWarn>$(NoWarn);CS1591;SYSLIB0050;SYSLIB0051</NoWarn>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package">
+    <PackageId>DigitalDJPool.DapperExtensions</PackageId>
+    <Version>1.6.3</Version>
+    <Authors>Thad Smith, Page Brooks</Authors>
+    <Company>Digital DJ Pool</Company>
+    <Copyright>Copyright 2011 Thad Smith, Page Brooks and contributors</Copyright>
+    <Description>Digital DJ Pool's multi-targeted (net481, netstandard2.0, net10.0) build of DapperExtensions 1.6.3, a small library that complements Dapper by adding basic CRUD operations (Get, Insert, Update, Delete) for your POCOs. Same source, namespace, assembly name and AssemblyVersion (1.6.3.0) as the original DapperExtensions 1.6.3 package; build and packaging changes only.</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/digitaldjpool/Dapper-Extensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/digitaldjpool/Dapper-Extensions</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryBranch>djp/1.6.3</RepositoryBranch>
+    <PackageTags>orm sql micro-orm Data Dapper</PackageTags>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageReleaseNotes>1.6.3: multi-targeted repackage of upstream DapperExtensions 1.6.3 (tmsmith/Dapper-Extensions@dd82ecc6). No source changes.</PackageReleaseNotes>
+    <!-- Ship pdbs next to the dll, as the upstream 1.6.3 package did. -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\DapperExtensions\**\*.cs" Exclude="..\DapperExtensions\obj\**;..\DapperExtensions\bin\**" />
+    <!-- The async API that shipped in the upstream lib/net45 DLL. -->
+    <Compile Include="..\DapperExtensions.Net45\DapperAsync*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\readme.md" Pack="true" PackagePath="\" Visible="false" />
+    <None Include="..\NOTICE" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Floor chosen per DJP version policy; see NOTICE. Consumers may float higher (DJP pins 2.1.35). -->
+    <PackageReference Include="Dapper" Version="2.0.30" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net481'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>
+
+</Project>
